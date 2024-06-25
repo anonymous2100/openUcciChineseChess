@@ -1,0 +1,40 @@
+<assembly>
+	<id>assembly</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>true</includeBaseDirectory>
+
+	<!-- 文件设置，你想把哪些文件包含进去，或者把某些文件排除掉，都是在这里配置 -->
+	<fileSets>
+		<!-- 把项目自己编译出来的可执行jar，打包进zip文件的根目录 -->
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>*.jar</include>
+			</includes>
+		</fileSet>
+		<!-- 对资源文件进行打包 -->
+		<fileSet>
+			<!-- ${project.build.outputDirectory} 为构建过程输出目录，缺省为 target/classes -->
+			<directory>${project.build.outputDirectory}/config</directory>
+			<outputDirectory>config</outputDirectory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+
+<!-- 	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<outputDirectory>lib</outputDirectory>
+			<unpack>false</unpack>
+			<scope>runtime</scope>
+		</dependencySet>
+	</dependencySets> -->
+
+
+
+</assembly>

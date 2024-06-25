@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ctgu</groupId>
+	<artifactId>openUcciChineseChess</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<javafx.version>18.0.2</javafx.version>
+
+		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.greenrobot</groupId>
+			<artifactId>eventbus</artifactId>
+			<version>3.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ini4j</groupId>
+			<artifactId>ini4j</artifactId>
+			<version>0.5.4</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<!-- ${project.build.outputDirectory}
+							为构建过程输出目录，缺省为target/classes -->
+							<outputDirectory>
+								${project.build.outputDirectory}/config</outputDirectory>
+							<resources>
+								<resource>
+									<!-- 需要拷贝的资源文件位置 -->
+									<directory>src/main/resources</directory>
+									<!-- 开启变量替换，将 pom.xml 中的相关变量替换至 properties
+									文件中，该项目中未使用该特性 -->
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.ctgu.Application</mainClass>
+						</manifest>
+					</archive>
+					<!--过滤掉不希望包含在jar中的文件-->
+					<excludes>
+						<!-- 排除不需要的文件夹(路径是jar包内部的路径) -->
+						<exclude>**/assembly/</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.ctgu.Application</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<!-- 将组装绑定到maven生命周期的哪一阶段 -->
+						<phase>package</phase>
+						<goals>
+							<!-- 指定assembly插件的打包方式 -->
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<resources>
+			<!-- 排除默认资源文件 -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<!-- 禁用过滤，禁用过滤，否则资源文件会被损坏             -->
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/*</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+
+</project>
