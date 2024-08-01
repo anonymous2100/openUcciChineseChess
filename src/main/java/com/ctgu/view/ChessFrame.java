@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import com.ctgu.constant.ChessConstant;
 import com.ctgu.engine.UcciEngine;
 import com.ctgu.util.FileUtil;
 import com.ctgu.util.IniFileUtil;
@@ -23,6 +24,11 @@ public class ChessFrame extends JFrame implements ActionListener
 	private JMenu gameMenu;
 	private JMenuItem newItem;
 	private JMenuItem exitItem;
+
+	private JMenu boardPieceMenu;
+	private JMenuItem boardItem;
+	private JMenuItem pieceItem;
+
 	private JMenu helpMenu;
 	private JMenuItem helpItem;
 	private JMenuItem aboutItem;
@@ -47,6 +53,15 @@ public class ChessFrame extends JFrame implements ActionListener
 		newItem.addActionListener(this);
 		exitItem.addActionListener(this);
 
+		boardPieceMenu = new JMenu("设置");
+		boardItem = new JMenuItem("棋盘设置");
+		pieceItem = new JMenuItem("棋子设置");
+		boardPieceMenu.add(boardItem);
+		boardPieceMenu.add(pieceItem);
+		menuBar.add(boardPieceMenu);
+		boardItem.addActionListener(this);
+		pieceItem.addActionListener(this);
+
 		helpMenu = new JMenu("帮助");
 		helpItem = new JMenuItem("帮助");
 		aboutItem = new JMenuItem("关于");
@@ -62,7 +77,7 @@ public class ChessFrame extends JFrame implements ActionListener
 	{
 		this.getContentPane().add(chessPanel, BorderLayout.CENTER);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1350, 1050);
+		this.setSize(ChessConstant.CHESSBOARD_MARGIN + ChessConstant.GRID_WIDTH * 9, 1050);
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
 		this.setTitle("弈心象棋");
@@ -128,6 +143,14 @@ public class ChessFrame extends JFrame implements ActionListener
 		else if (e.getSource() == aboutItem)
 		{
 			new Dialog("关于", "弈心象棋\n开发者：anonymous2100\n联系方式：2110931055@qq.com", new Dimension(200, 150));
+		}
+		else if (e.getSource() == boardItem)
+		{
+			new ListDialog("请选择棋盘", ChessConstant.BOARD_NAME, null, "Board", chessPanel);
+		}
+		else if (e.getSource() == pieceItem)
+		{
+			new ListDialog("请选择棋子", ChessConstant.PIECES_NAME, null, "Piece", chessPanel);
 		}
 		else if (e.getSource() == newItem)
 		{

@@ -548,7 +548,7 @@ public class ChessPanel extends JPanel
 		imgBoard = getImage(getCodeBase(), "boards/" + ChessConstant.BOARD_NAME[Config.get().getBoard()]);
 	}
 
-	private void loadPieces()
+	public void loadPieces()
 	{
 		BufferedImage bufImage = null;
 		pieceImageArray = new BufferedImage[16];
@@ -603,7 +603,7 @@ public class ChessPanel extends JPanel
 		Graphics2D g2 = (Graphics2D) g;
 		g2.drawImage(imgBoard, 0, 0, this);
 		String boardName = ChessConstant.BOARD_NAME[Config.get().getBoard()];
-		if (boardName != null && !boardName.contains("xiangqiBoard"))
+		if (boardName != null && boardName.startsWith("bg_"))
 		{
 			drawGrid(g2);
 		}
@@ -920,5 +920,15 @@ public class ChessPanel extends JPanel
 	public void setTo(int to)
 	{
 		this.to = to;
+	}
+	
+	public BufferedImage getImgBoard()
+	{
+		return imgBoard;
+	}
+
+	public void setImgBoard(BufferedImage imgBoard)
+	{
+		this.imgBoard = imgBoard;
 	}
 }

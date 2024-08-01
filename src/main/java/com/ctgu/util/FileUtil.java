@@ -11,6 +11,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.ctgu.view.ChessPanel;
@@ -22,6 +25,14 @@ public class FileUtil
 {
 	private static final String TEMP_FILE_NAME = "chess-temp-log.txt";
 
+	/**
+	 * 文件读取
+	 *
+	 * @param sourceFilePath
+	 *            源文件路径
+	 * @throws IOException
+	 *             文件写入异常
+	 */
 	public static byte[] readFile(String sourceFilePath) throws IOException
 	{
 		final File file = new File(sourceFilePath);
@@ -38,6 +49,14 @@ public class FileUtil
 		return buf;
 	}
 
+	/**
+	 * 动态字节流文件读取
+	 *
+	 * @param classPath
+	 *            源文件路径
+	 * @throws IOException
+	 *             文件写入异常
+	 */
 	public static byte[] readFromResource(String classPath) throws IOException
 	{
 		final ClassLoader classLoader = ChessPanel.class.getClassLoader();
@@ -74,6 +93,7 @@ public class FileUtil
 		try
 		{
 			File file = new File(filePath);
+			// System.out.println("read log file from " + file.getAbsolutePath());
 			FileReader reader = new FileReader(file);
 			BufferedReader br = new BufferedReader(reader);
 			String str = null;
@@ -108,6 +128,7 @@ public class FileUtil
 			{
 				file = new File(filePath);
 			}
+			// System.out.println("write log file to " + file.getAbsolutePath());
 			FileWriter writer = new FileWriter(file, true);
 			BufferedWriter bw = new BufferedWriter(writer);
 			bw.write(content + "\n");
@@ -129,6 +150,7 @@ public class FileUtil
 		try
 		{
 			File file = new File(System.getProperty("user.dir") + File.separator + TEMP_FILE_NAME);
+			// System.out.println("create log file " + file.getAbsolutePath());
 			if (file.exists() == false)
 			{
 				file.createNewFile();
@@ -176,6 +198,12 @@ public class FileUtil
 		return fileList;
 	}
 
+	/**
+	 * 遍历此路径的文件夹 返回里面的所有文件 用一个集合list 将文件装起来 由于递归不能在里面定义 所以作为参数传进来
+	 * 
+	 * @param path
+	 * @return
+	 */
 	public static void getAllFiles(String path, List<String> fileList, List<String> fileTypes)
 	{
 		File file = new File(path);
@@ -203,5 +231,50 @@ public class FileUtil
 				}
 			}
 		}
+	}
+
+	public static void getFiles(String path, List<File> fileList)
+	{
+		File file = new File(path);
+		if (!file.exists())
+		{
+			return;
+		}
+		File[] files = file.listFiles();
+		if (files == null || files.length == 0)
+		{
+			return;
+		}
+		for (File subFile : files)
+		{
+			if (subFile.isDirectory())
+			{
+				getFiles(subFile.getName(), fileList);
+			}
+			else
+			{
+				fileList.add(subFile);
+			}
+		}
+		shuffle(fileList);
+	}
+
+	public static List<File> shuffle(List<File> fileList)
+	{
+		String[] regulation = { "rr", "rn", "rb", "ra", "rk", "rc", "rp", "oos", "br", "bn", "bb", "ba", "bk", "bc", "bp", "oos2" };
+		List<String> regulationOrder = Arrays.asList(regulation);
+		Collections.sort(fileList, new Comparator<File>()
+		{
+			public int compare(File o1, File o2)
+			{
+				String o1Name = o1.getName().substring(0, o1.getName().indexOf("."));
+				String o2Name = o2.getName().substring(0, o2.getName().indexOf("."));
+				// System.out.println("o1Name=" + o1Name + ", o2Name=" + o2Name);
+				int io1 = regulationOrder.indexOf(o1Name);
+				int io2 = regulationOrder.indexOf(o2Name);
+				return (io1 == -1 || io2 == -1) ? (io2 - io1) : (io1 - io2);
+			}
+		});
+		return fileList;
 	}
 }
