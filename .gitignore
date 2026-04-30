@@ -1,0 +1,7 @@
+target
+*.classpath
+*.project
+*.prefs
+.idea
+.claude
+0-doc
