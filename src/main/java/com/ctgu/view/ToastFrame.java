@@ -59,7 +59,7 @@ public class ToastFrame extends JFrame
 		final int delay = (time == null) ? 2500 : time;
 		try
 		{
-			java.net.URL canvasUrl = getClass().getResource("/boards/canvas.png");
+			java.net.URL canvasUrl = getClass().getResource("/config/boards/canvas.png");
 			if (canvasUrl != null)
 			{
 				background = new ImageIcon(canvasUrl);

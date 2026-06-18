@@ -129,7 +129,7 @@ public class UcciEngine
 		}
 		try
 		{
-			URL dirUrl = UcciEngine.class.getResource("/engines/" + dirName);
+			URL dirUrl = UcciEngine.class.getResource("/config/engines/" + dirName);
 			if (dirUrl == null)
 			{
 				return;
@@ -147,7 +147,7 @@ public class UcciEngine
 			else if ("jar".equalsIgnoreCase(dirUrl.getProtocol()))
 			{
 				// JAR 模式：尝试逐个复制已知引擎文件（需要提交文件清单）
-				String resourceRoot = "/engines/" + dirName + "/";
+				String resourceRoot = "/config/engines/" + dirName + "/";
 				String exeName = fileName.contains(File.separator)
 						? fileName.substring(fileName.indexOf(File.separator) + 1)
 						: fileName;

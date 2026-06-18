@@ -32,7 +32,7 @@ public enum ChessAudio
 			Clip localClip = null;
 			try
 			{
-				InputStream resourceStream = ChessAudio.class.getResourceAsStream("/sounds/" + tag + ".wav");
+				InputStream resourceStream = ChessAudio.class.getResourceAsStream("/config/sounds/" + tag + ".wav");
 				if (resourceStream == null)
 				{
 					return;
@@ -80,7 +80,7 @@ public enum ChessAudio
 		{
 			while (!Thread.currentThread().isInterrupted())
 			{
-				try (InputStream resourceStream = ChessAudio.class.getResourceAsStream("/sounds/backMusic.mp3"))
+				try (InputStream resourceStream = ChessAudio.class.getResourceAsStream("/config/sounds/backMusic.mp3"))
 				{
 					if (resourceStream == null)
 					{

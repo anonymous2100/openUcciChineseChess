@@ -1818,7 +1818,7 @@ public class ChessPanel extends JPanel
 
   public void loadBoard()
   {
-    BufferedImage raw = loadImageFromResource("/boards/" + ChessConstant.BOARD_NAME[Config.get().getBoard()]);
+    BufferedImage raw = loadImageFromResource("/config/boards/" + ChessConstant.BOARD_NAME[Config.get().getBoard()]);
     // 预缩放棋盘图到设备像素，防止 HiDPI 拉伸模糊
     int boardLogW = ChessConstant.CHESSBOARD_MARGIN * 2 + ChessConstant.GRID_WIDTH * 8;
     int boardLogH = ChessConstant.CHESSBOARD_MARGIN * 2 + ChessConstant.GRID_WIDTH * 9;
@@ -1828,7 +1828,7 @@ public class ChessPanel extends JPanel
   public void loadPieces()
   {
     pieceImageArray = new BufferedImage[16];
-    String piecesDir = "/pieces/" + ChessConstant.PIECES_NAME[Config.get().getPieces()] + "/";
+    String piecesDir = "/config/pieces/" + ChessConstant.PIECES_NAME[Config.get().getPieces()] + "/";
     for(int i = 0; i < pieceImageArray.length; i++)
     {
       pieceImageArray[i] = loadPieceImage(piecesDir, ChessConstant.PIECE_ARRAY[i]);

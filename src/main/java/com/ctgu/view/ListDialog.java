@@ -77,7 +77,7 @@ public class ListDialog extends JFrame
 			ImageIcon icon = null;
 			if ("Board".equals(type))
 			{
-				java.net.URL url = getClass().getResource("/boards/" + ChessConstant.BOARD_NAME[Config.get().getBoard()]);
+				java.net.URL url = getClass().getResource("/config/boards/" + ChessConstant.BOARD_NAME[Config.get().getBoard()]);
 				if (url != null)
 				{
 					icon = new ImageIcon(url);
@@ -126,7 +126,7 @@ public class ListDialog extends JFrame
 							{
 								if ("Board".equals(type))
 								{
-									java.net.URL url = getClass().getResource("/boards/" + jList.getSelectedValue());
+									java.net.URL url = getClass().getResource("/config/boards/" + jList.getSelectedValue());
 									if (url != null)
 									{
 										ImageIcon icon = new ImageIcon(url);
@@ -135,7 +135,7 @@ public class ListDialog extends JFrame
 									int board = jList.getSelectedIndex();
 									Config.get().setBoard(board);
 									BufferedImage bufImage = ImageIO.read(
-											getClass().getResource("/boards/" + contentArray[Config.get().getBoard()]));
+											getClass().getResource("/config/boards/" + contentArray[Config.get().getBoard()]));
 									chessPanel.setImgBoard(bufImage);
 								}
 								else if ("Piece".equals(type))
@@ -162,7 +162,7 @@ public class ListDialog extends JFrame
 	/** 从类路径加载某套棋子的所有图片，合并为一张预览图 */
 	private ImageIcon createPiecePreview(String styleName)
 	{
-		String dir = "/pieces/" + styleName + "/";
+		String dir = "/config/pieces/" + styleName + "/";
 		BufferedImage[] images = new BufferedImage[ChessConstant.PIECE_ARRAY.length];
 		int count = 0;
 		for (String pieceName : ChessConstant.PIECE_ARRAY)

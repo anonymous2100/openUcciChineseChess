@@ -171,14 +171,10 @@
 			</plugin>
 		</plugins>
 		<resources>
-			<!-- 排除默认资源文件 -->
 			<resource>
 				<directory>src/main/resources</directory>
-				<!-- 禁用过滤，禁用过滤，否则资源文件会被损坏             -->
+				<!-- 禁用过滤，否则资源文件（含中文文件名）会被损坏 -->
 				<filtering>false</filtering>
-				<excludes>
-					<exclude>**/*</exclude>
-				</excludes>
 			</resource>
 		</resources>
 	</build>
